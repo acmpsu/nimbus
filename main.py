@@ -2,24 +2,23 @@ from dotenv import load_dotenv
 import os
 
 import discord
+from discord.ext import commands
+from greetings import Greetings
+from auto_role import AutoRole
 
 load_dotenv()
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
+bot = commands.Bot(intents=intents, command_prefix='!')
 
-@client.event
+
+@bot.event
 async def on_ready():
-    print('yay')
-    
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+    await bot.add_cog(Greetings(bot))
+    await bot.add_cog(AutoRole(bot))
+    await bot.tree.sync(guild=discord.Object(id=1247395905938653264))
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
 
-client.run(os.getenv('BOT_TOKEN'))
+bot.run(os.getenv('BOT_TOKEN'))
