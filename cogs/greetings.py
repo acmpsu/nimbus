@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 
+
 class Greetings(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -11,4 +12,3 @@ class Greetings(commands.Cog):
         channel = member.guild.system_channel
         if channel is not None:
             await channel.send(f'Welcome {member.mention}.')
-
