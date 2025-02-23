@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 from greetings import Greetings
 from auto_role import AutoRole
+from fun import Fun
 
 load_dotenv()
 
@@ -16,9 +17,11 @@ bot = commands.Bot(intents=intents, command_prefix='!')
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='puddles form'))
     await bot.add_cog(Greetings(bot))
     await bot.add_cog(AutoRole(bot))
-    await bot.tree.sync(guild=discord.Object(id=1247395905938653264))
+    await bot.add_cog(Fun(bot))
+    await bot.tree.sync()
 
 
 bot.run(os.getenv('BOT_TOKEN'))

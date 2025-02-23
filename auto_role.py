@@ -10,9 +10,6 @@ class AutoRole(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def bot_check(self, ctx):
-        return ctx.author.guild_permissions.administrator
-
     @commands.hybrid_command()
     async def joinrole(self, ctx, role_name: str):
         if role_name not in JOINABLE_ROLES:
@@ -48,6 +45,7 @@ class AutoRole(commands.Cog):
             await ctx.send(f"✅ You have been removed from `{role_name}`.")
             
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def getroled(self, ctx, role_name: str):
         role = discord.utils.get(ctx.guild.roles, name=role_name)
         
